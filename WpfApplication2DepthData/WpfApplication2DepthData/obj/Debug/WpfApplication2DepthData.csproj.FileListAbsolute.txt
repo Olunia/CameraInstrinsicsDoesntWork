@@ -1,0 +1,60 @@
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.exe.config
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.exe
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.pdb
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.dll
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.xml
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.csprojResolveAssemblyReference.cache
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\MainWindow.g.cs
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\App.g.cs
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData_MarkupCompile.cache
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData_MarkupCompile.lref
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\MainWindow.baml
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.g.resources
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.Properties.Resources.resources
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.csproj.GenerateResource.Cache
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.exe
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.pdb
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Coding4Fun.Kinect.Wpf.dll
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Expression.Drawing.dll
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.Face.dll
+D:\Studia IIst EL\MAGISTERKA\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.Face.xml
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.exe.config
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.exe
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.pdb
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Coding4Fun.Kinect.Wpf.dll
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Expression.Drawing.dll
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.dll
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.Face.dll
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.xml
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.Face.xml
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.csprojResolveAssemblyReference.cache
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\MainWindow.g.cs
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\App.g.cs
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData_MarkupCompile.cache
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData_MarkupCompile.lref
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\MainWindow.baml
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.g.resources
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.Properties.Resources.resources
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.csproj.GenerateResource.Cache
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.exe
+D:\MGR\Projekty\WpfApplication2DepthData\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.pdb
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.exe.config
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.exe
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\WpfApplication2DepthData.pdb
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\Coding4Fun.Kinect.Wpf.dll
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\Microsoft.Expression.Drawing.dll
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.dll
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.Face.dll
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.xml
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\bin\Debug\Microsoft.Kinect.Face.xml
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.csprojResolveAssemblyReference.cache
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\MainWindow.g.cs
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\App.g.cs
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData_MarkupCompile.cache
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData_MarkupCompile.lref
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\MainWindow.baml
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.g.resources
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.Properties.Resources.resources
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.csproj.GenerateResource.Cache
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.exe
+D:\MGR\Projekty\WpfApplication2DepthData — kopia\WpfApplication2DepthData\obj\Debug\WpfApplication2DepthData.pdb

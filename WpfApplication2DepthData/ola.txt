@@ -1,0 +1,645 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Microsoft.Kinect;
+using System.IO;
+
+namespace WpfApplication2DepthData
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        
+        int width;
+        int height;       
+        ushort minDepth;
+        ushort maxDepth;
+        ushort[] pixelData = new ushort[217088];
+        byte[] pixels = new byte[1058304]; //pixels.Length=1058304;
+        string[] pixelDataString = new string[217088]; //pixelData.Length= 217088;
+        byte[] intensity2 = new byte[217088];
+        string[] intensity3 = new string[217088];
+        ushort depth;
+        ushort[,] pixelMatrixData = new ushort[424, 512]; //tablica 2 wymiarowa zapisuj¹ca mapê g³êbokoœci w ushort - konwersja w trakcie zapisu do pliku
+        // dataArray[] - wartoœci mapy g³êbi wysy³ane przez Kinect
+        // depthImage[][] - te same wartoœci jako tablica 2D
+        //string[,] pixelMatrixString = new string[424, 512]; //tablica 2 wymiarowa zapisuj¹ca mapê g³êbokoœci w string
+        /*float[] xxxx = new float[217088];
+        float[] yyyy = new float[217088];
+        string[] xxxxx = new string[217088];
+        string[] yyyyy = new string[217088];
+        //depthSpacePoints = new DepthSpacePoint[217088];*/
+        uint bytesperpixel;
+        float diagonalfieldofview;
+        float horizontalfieldofview;
+        uint lengthinpixels;
+        float verticalfieldofview;
+        public static DepthSpacePoint[] depthSpacePoints;
+
+        
+
+        // Constructor
+        public MainWindow()
+        {
+            InitializeComponent();
+            this.Loaded += OnLoaded;
+            
+        }
+        KinectSensor sensor;
+        DepthFrameReader reader;
+        
+        void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.sensor = KinectSensor.GetDefault();
+            this.sensor.Open();
+            this.reader = this.sensor.DepthFrameSource.OpenReader();
+            this.reader.FrameArrived += OnFrameArrived;
+        }
+
+        void OnFrameArrived(object sender, DepthFrameArrivedEventArgs e)
+        {
+            using (var frame = e.FrameReference.AcquireFrame())
+            {
+                if (frame != null)
+                {
+                    camera.Source = ProcessFrame(frame);
+                }
+            }
+        }
+        //public struct DepthSpacePoint { };
+
+            //public ImageSource aa(DepthSpacePoint dd) { }
+        
+        public ImageSource ProcessFrame(DepthFrame frame)
+        {
+            width = frame.FrameDescription.Width;
+            height = frame.FrameDescription.Height;
+            
+            bytesperpixel = frame.FrameDescription.BytesPerPixel;
+            diagonalfieldofview = frame.FrameDescription.DiagonalFieldOfView;
+            horizontalfieldofview = frame.FrameDescription.HorizontalFieldOfView;
+            lengthinpixels = frame.FrameDescription.LengthInPixels;
+            verticalfieldofview = frame.FrameDescription.VerticalFieldOfView;
+
+            PixelFormat format = PixelFormats.Bgr32;
+            minDepth = frame.DepthMinReliableDistance;
+            maxDepth = frame.DepthMaxReliableDistance;
+            pixelData = new ushort[width * height];
+            pixels = new byte[width * height * (format.BitsPerPixel + 7) / 8];//zeby zaokraglic do bajtow
+            frame.CopyFrameDataToArray(pixelData); //zapis mapy g³êbokoœci do tablicy o wymiarach 217088x1
+            int colorIndex = 0;
+            
+            //---------zapis mapy g³êbokoœci do tablicy o wymiarach 424x512
+            for (int row = 0; row < 424; row++)
+                for (int col = 0; col < 512; col++)
+                    pixelMatrixData[row, col] = pixelData[row * 512 + col];
+            //---------
+
+            for (int depthIndex = 0; depthIndex < pixelData.Length; ++depthIndex)
+            {
+                depth = pixelData[depthIndex];
+                byte intensity = (byte)(depth >= minDepth && depth <= maxDepth ? depth : 0);
+                pixels[colorIndex++] = intensity; // Blue
+                pixels[colorIndex++] = intensity; // Green
+                pixels[colorIndex++] = intensity; // Red
+                //Console.WriteLine(depthSpacePoints);
+                ++colorIndex;
+                intensity2[depthIndex] = intensity;
+
+                ///depthSpacePoints = new DepthSpacePoint[depthIndex];
+                //float[] xxx= depthSpacePoints[depthIndex];
+                //float xxx = depthSpacePoints[depthIndex].X  ;
+                //float yyy = depthSpacePoints[depthIndex].Y  ;
+
+                // xxxx[depthIndex] = depthSpacePoints[depthIndex].X;
+                //yyyy[depthIndex] = depthSpacePoints[depthIndex].Y;
+                /*DepthSpacePoint depthspacepoint = new DepthSpacePoint(pixelData);
+                float xdepth = depthspacepoint.X;
+                float ydepth = depthspacepoint.Y;*/
+
+            }
+
+            
+            //------------------------------------------------------Ola-----------------------------------------------------------------------
+            
+            //------------------------------------------------------Ola-----------------------------------------------------------------------
+
+            /*------------------------------------------------------Ola test ushort dzia³a i nadpisuje plik-----------------------------------------------------------------------
+
+            ushort[] testushort = { 0, 1, 2, 25, 86, 123, 578, 190, 2678, 11133, 4, 6, 8, 124, 567, 45, 234, 55, 6600 };
+            string[] teststring = new string[testushort.Length];
+
+            for (int iconvert1 = 0; iconvert1 < testushort.Length; ++iconvert1)
+            {
+
+                teststring[iconvert1] = Convert.ToString(testushort[iconvert1]);
+                Console.WriteLine(teststring[iconvert1]);
+            }
+
+            System.IO.File.WriteAllLines(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\test.txt", teststring);
+            */
+            //------------------------------------------------------Ola-----------------------------------------------------------------------
+            int stride = width * format.BitsPerPixel / 8;
+            return BitmapSource.Create(width, height, 96, 96, format, null, pixels, stride);
+            
+
+            //---Ola....
+            /*string asString;
+            byte[] asBytes = new byte[pixelData.Length * sizeof(ushort)];
+            Buffer.BlockCopy(pixelData, 0, asBytes, 0, asBytes.Length);
+            asString = Encoding.Unicode.GetString(asBytes);
+            */
+
+            // string[] pixelDataString = Convert.ToString(pixelData);
+            /* string result;
+             foreach (ushort number in pixelData)
+             {
+                 result = Convert.ToString(number);
+             }*/
+
+            //---Ola....
+        }
+        /*
+        abstract class DepthMap
+        {
+            public ushort minDepth;
+            public ushort maxDepth;
+
+            public DepthMap(ushort minDepth, ushort maxDepth)
+            {
+                this.minDepth = minDepth;
+                this.maxDepth = maxDepth;
+            }
+
+            public abstract Color GetColorForDepth(ushort depth);
+
+            double h, s, v;
+            int r, g, b;
+
+            h = ((depth - minDepth) / (maxDepth - minDepth)) * 360;
+            v = 1;
+            s = 1;
+ 
+            Hsv.HsvToRg(h, v, s, out r, out g, out b);
+ 
+            return new Color {
+                                R = (byte)r,
+                                G = (byte)g,
+                                B = (byte)b
+                             };
+        }*/
+
+        
+
+       public void SaveDepth_Click(object sender, RoutedEventArgs e) //event handler do buttona
+        {
+            //------------------------------------------------------Ola-----------------------------------------------------------------------
+            pixelDataString = new string[pixelData.Length];
+
+             for (int iconvert = 0; iconvert < pixelData.Length; ++iconvert) // convert to srting
+             {
+
+                 pixelDataString[iconvert] = Convert.ToString(pixelData[iconvert]);
+                intensity3[iconvert] = Convert.ToString(intensity2[iconvert]);
+                /*xxxxx[iconvert] = Convert.ToString(xxxx[iconvert]);
+                yyyyy[iconvert] = Convert.ToString(yyyyy[iconvert]);*/
+            }
+
+            
+            
+
+            //------------------------------------------------------Ola-----------------------------------------------------------------------
+            //zapis mapy g³êbokoœci do tablicy o wymiarach 217088x1 do pliku tekstowego
+            System.IO.File.WriteAllLines(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\pixelDataString.txt", pixelDataString);
+
+            // zapis mapy g³êbokoœci do tablicy o wymiarach 217088x1 do pliku tekstowego do folderu moje obrazy z inn¹ nazw¹
+            string time = System.DateTime.UtcNow.ToString("M'-'d'-'yyyy' ('hh'-'mm'-'ss')'");//, CultureInfo.CurrentUICulture.DateTimeFormat);
+            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            //string path = System.IO.Path.Combine(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\pixelDataString" + time + ".txt");
+            string path = System.IO.Path.Combine(myPhotos, "KinectScreenshot-Depth-" + time + ".txt");
+            System.IO.File.WriteAllLines(path, pixelDataString);
+
+
+            //zapis mapy g³êbokoœci do tablicy o wymiarach 217088x1 do pliku csv
+            System.IO.File.WriteAllLines(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\DepthArray.csv", pixelDataString);
+
+            //zapis mapy g³êbokoœci do tablicy o wymiarach 424x512 do pliku 
+            using (System.IO.StreamWriter outfile = new System.IO.StreamWriter(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\DepthMatrix.csv")) 
+            {
+                for (int x = 0; x < 424; x++)
+                {
+                    string content = "";
+                    for (int y = 0; y < 512; y++)
+                    {
+                        content += pixelMatrixData[x, y].ToString("0.00") + ";";
+                    }
+                    outfile.WriteLine(content);
+                }
+            }
+
+
+            /*//¿le - plik tekstowy nie moze przyj¹æ wystarczaj¹cej iloœci znaków w 1 wierszu
+             * 
+             * for (int row = 0; row < 424; row++)
+                for (int col = 0; col < 512; col++)
+                    pixelMatrixString[row,col] = pixelDataString[row * 512 + col];
+             * 
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\pixelMatrixString.txt")) //zapis mapy g³êbokoœci do tablicy o wymiarach 424x512 do pliku tekstowego
+            {
+                foreach (string line in pixelMatrixString)
+                {
+                    file.Write(line + " ");
+
+                }
+            }
+            */
+
+            /*//¿le
+              using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\a.csv"))
+             {
+                 foreach (string line in pixelMatrixString)
+                 {
+                     file.Write(line + ",");
+
+                 }
+             }*/
+
+            //Ÿle - 424 wiersze, ale 1 kolumna 
+            /* using (var sw = new System.IO.StreamWriter(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\a.csv"))
+             {
+                 for (int i = 0; i < 424; i++)
+                 {
+                     for (int j = 0; j < 512; j++)
+                     {
+                         sw.Write(pixelMatrixString[i, j] + ",");
+                     }
+                     sw.Write("\n");
+                 }
+
+                 sw.Flush();
+                 sw.Close();
+             }*/
+
+
+
+            //Ÿle zapisuje 
+            /*using (System.IO.TextWriter tw = new System.IO.StreamWriter(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\pixelMatrixString1.txt"))
+           {
+               for (int j = 0; j < 512; j++)
+               {
+                   for (int i = 0; i < 424; i++)
+                   {
+                       tw.Write(pixelMatrixString[i, j] + " ");
+                   }
+                   tw.WriteLine();
+               }
+           }*/
+
+
+            string width2 = Convert.ToString(width);
+            string height2 = Convert.ToString(height);
+            string bytesperpixel2 = Convert.ToString(bytesperpixel);            
+            string diagonalfieldofview2 = Convert.ToString(diagonalfieldofview);
+            string horizontalfieldofview2 = Convert.ToString(horizontalfieldofview);
+            string lengthinpixels2 = Convert.ToString(lengthinpixels);
+            string verticalfieldofview2 = Convert.ToString(verticalfieldofview);
+
+            string[] framedecription2 = { "width", width2, "height", height2, "bytesperpixel", bytesperpixel2, "diagonalfieldofview", diagonalfieldofview2, "horizontalfieldofview", horizontalfieldofview2, "lengthinpixels", lengthinpixels2, "verticalfieldofview", verticalfieldofview2 };
+            System.IO.File.WriteAllLines(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\ALL.txt", framedecription2);
+                    
+            System.IO.File.WriteAllLines(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\Intensity.txt", intensity3);
+            /*System.IO.File.WriteAllLines(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\xxxxx.txt", xxxxx);
+            System.IO.File.WriteAllLines(@"D:\Studia IIst EL\MAGISTERKA\Projekty\ZAPISANE PLIKI\yyyyy.txt", yyyyy);*/
+        }
+
+        
+        private void SaveWidth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveHeight_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}
+/*
+using System;
+using Microsoft.Kinect;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+//using Microsoft.Research.Kinect.Audio;
+//using Microsoft.Research.Kinect.Nui;
+using Coding4Fun.Kinect.Wpf;
+using System.Diagnostics;
+using System.IO;
+
+
+namespace WpfApplication2DepthData
+
+{
+
+    /// <summary>
+
+    /// Interaction logic for MainWindow.xaml
+
+    /// </summary>
+
+    public partial class MainWindow : Window
+    {
+        Microsoft.Research.Kinect.Nui.Runtime nui;
+        public MainWindow()
+
+        {
+            InitializeComponent();
+            this.Loaded += (s, e) =>
+            {
+                nui = Runtime.Kinects[0];
+
+            }
+
+
+        /// </summary>
+            //_nui = Runtime.Kinects[0];//  Runtime nui = new Runtime();
+
+
+        private void button1_cliked(object sender, RoutedEventArgs e)
+
+        {
+
+            //Set angle to slider1 value
+
+            nui.NuiCamera.ElevationAngle = (int)slider4.Value;
+
+        }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+
+        {
+
+            nui.Initialize(RuntimeOptions.UseColor | RuntimeOptions.UseDepthAndPlayerIndex);
+
+
+            nui.VideoFrameReady += new EventHandler<ImageFrameReadyEventArgs>(nui_VideoFrameReady);
+
+            nui.DepthFrameReady += new EventHandler<ImageFrameReadyEventArgs>(nui_DepthFrameReady);
+
+
+
+            nui.VideoStream.Open(ImageStreamType.Video, 2,
+
+                ImageResolution.Resolution640x480, ImageType.Color);
+
+            nui.DepthStream.Open(ImageStreamType.Depth, 2,
+
+              ImageResolution.Resolution320x240, ImageType.DepthAndPlayerIndex);
+
+        }
+
+
+
+        void nui_DepthFrameReady(object sender, ImageFrameReadyEventArgs e)
+
+        {
+
+            byte[] ColoredBytes = GenerateColoredBytes(e.ImageFrame);
+
+            //create an image based on returned colors
+
+
+            PlanarImage image = e.ImageFrame.Image;
+
+            image1.Source = BitmapSource.Create(image.Width, image.Height, 96, 96,
+
+                PixelFormats.Bgr32, null, ColoredBytes,
+
+                image.Width * PixelFormats.Bgr32.BitsPerPixel / 8);
+
+        }
+
+
+        private byte[] GenerateColoredBytes(ImageFrame imageFrame)
+
+        {
+
+            int height = imageFrame.Image.Height;
+
+            int width = imageFrame.Image.Width;
+
+
+            //Depth data for each pixel
+
+            Byte[] depthData = imageFrame.Image.Bits;
+
+            Byte[] colorFrame = new byte[imageFrame.Image.Height * imageFrame.Image.Width * 4];
+
+
+            //hardcoded locations to Blue, Green, Red (BGR) index positions       
+
+            const int BlueIndex = 0;
+
+            const int GreenIndex = 1;
+
+            const int RedIndex = 2;
+
+            var depthIndex = 0;
+
+            TextWriter tw = new StreamWriter("sameobjects_test" + ".txt");
+
+
+            for (var y = 0; y < height; y++)
+
+            {
+
+
+                var heightOffset = y * width;
+
+
+                for (var x = 0; x < width; x++)
+
+                {
+
+
+                    var index = ((width - x - 1) + heightOffset) * 4;
+
+
+                    // save distance to text file
+
+                    var distance = GetDistanceWithPlayerIndex(depthData[depthIndex], depthData[depthIndex + 1]);
+
+                    tw.WriteLine("x: " + x + ", y: " + y + ", distance: " + distance + " ");
+
+
+                    if (distance < 850)
+
+                    {
+
+                        ////we are very close white
+
+                        colorFrame[index + BlueIndex] = 255;
+
+                        colorFrame[index + GreenIndex] = 255;
+
+                        colorFrame[index + RedIndex] = 255;
+
+                    }
+
+
+                    else if (distance >= 850 && distance < 950)
+
+                    {
+
+                        //we are a bit further away Green
+
+                        colorFrame[index + BlueIndex] = 0;
+
+                        colorFrame[index + GreenIndex] = 255;
+
+                        colorFrame[index + RedIndex] = 0;
+
+                    }
+
+                    else if (distance >= 950 && distance < 1050)
+
+                    {
+
+                        //we are a bit further away Blue
+
+                        colorFrame[index + BlueIndex] = 255;
+
+                        colorFrame[index + GreenIndex] = 0;
+
+                        colorFrame[index + RedIndex] = 0;
+
+                    }
+
+                    else if (distance >= 1050 && distance < 1150)
+
+                    {
+
+                        //we are a bit further away Red
+
+                        colorFrame[index + BlueIndex] = 0;
+
+                        colorFrame[index + GreenIndex] = 0;
+
+                        colorFrame[index + RedIndex] = 255;
+
+
+                    }
+
+                    else if (distance >= 1150 && distance < 1250)
+
+                    {
+
+                        //we are a bit further away yellow
+
+                        colorFrame[index + BlueIndex] = 0;
+
+                        colorFrame[index + GreenIndex] = 255;
+
+                        colorFrame[index + RedIndex] = 255;
+
+                    }
+
+
+                    else if (distance >= 1250)
+
+                    {
+
+                        //we are the farthest black
+
+                        colorFrame[index + BlueIndex] = 0;
+
+                        colorFrame[index + GreenIndex] = 0;
+
+                        colorFrame[index + RedIndex] = 0;
+
+                    }
+
+
+                    //jump two bytes at a time
+
+                    depthIndex += 2;
+
+
+                }
+
+            }
+
+            //tw.Close();
+
+            return colorFrame;
+
+        }
+
+
+        private int GetDistanceWithPlayerIndex(byte firstFrame, byte secondFrame)
+
+        {
+
+            //    //offset by 3 in first byte to get value after player index 
+
+            int distance = (int)(firstFrame >> 3 | secondFrame << 5);
+
+            return distance;
+
+        }
+
+
+        void nui_VideoFrameReady(object sender, ImageFrameReadyEventArgs e)
+
+        {
+            PlanarImage image = e.ImageFrame.Image;
+            image2.Source = e.ImageFrame.ToBitmapSource();
+
+        }
+
+
+
+        private void Window_Closed(object sender, EventArgs e)
+
+        {
+
+            nui.Uninitialize();
+
+        }
+
+
+        private void slider4_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+
+        {
+
+
+        }
+
+    
+    }
+
+}*/
+   
